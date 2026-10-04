@@ -13,11 +13,17 @@
 <body>
   <div class="topbar">
     <div class="wrap topbar__inner">
-      <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
-      <span class="topbar__sep">•</span>
-      <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
-      <span class="topbar__sep">•</span>
-      <span>Codziennie 11:00 – 22:00</span>
+      <div class="topbar__info">
+        <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
+        <span class="topbar__sep">•</span>
+        <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
+        <span class="topbar__sep">•</span>
+        <span>Codziennie 11:00 – 22:00</span>
+      </div>
+      <div class="lang" id="langSwitch" role="group" aria-label="Język / Language">
+        <button class="lang__btn is-active" data-lang="pl" type="button">PL</button>
+        <button class="lang__btn" data-lang="en" type="button">EN</button>
+      </div>
     </div>
   </div>
 
@@ -36,9 +42,10 @@
         <a href="zamow.html">Zamów online</a>
         <a href="rezerwacja.html" class="is-current">Rezerwacja</a>
         <a href="kontakt.html">Kontakt</a>
+        <a href="galeria.html">Galeria</a>
       </nav>
       <div class="nav__actions">
-        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk" data-i18n-aria-label="cart.aria">
           🛒 <span class="cart-btn__label">Koszyk</span>
           <span class="badge" id="cartCount">0</span>
         </button>
@@ -49,8 +56,11 @@
     </div>
   </header>
 
-  <section class="page-hero">
-    <div class="wrap">
+  <section class="page-hero page-hero--photo">
+    <img class="page-hero__img" data-place="table"
+         data-i18n-alt="Nakryty stolik przy oknie z widokiem na morze" alt="Nakryty stolik przy oknie z widokiem na morze" />
+    <div class="page-hero__shade" aria-hidden="true"></div>
+    <div class="wrap page-hero__content">
       <p class="eyebrow eyebrow--light">Rezerwacja stolika</p>
       <h1>Wybierz termin i stolik</h1>
       <p class="page-hero__lead">Poniżej widzisz rozłożenie sali i tarasu przed panoramicznym oknem. Kliknij wolny stolik, aby go wybrać.</p>
@@ -119,7 +129,7 @@
             <div class="floor__entry">wejście</div>
             <!-- stoliki generowane w JS -->
           </div>
-          <p class="floor__hint">Układ: <b>taras na zewnątrz</b> przed panoramicznymi oknami (od strony morza), dalej <b>stoliki przy oknie</b> i <b>sala główna</b>. Wejście po <b>lewej</b> stronie. Taras zależny od pogody.</p>
+          <p class="floor__hint" data-i18n="res.floorHint">Układ: <b>taras na zewnątrz</b> przed panoramicznymi oknami (od strony morza), dalej <b>stoliki przy oknie</b> i <b>sala główna</b>. Wejście po <b>lewej</b> stronie. Taras zależny od pogody.</p>
         </div>
       </div>
 
@@ -128,12 +138,12 @@
         <div class="res__form-grid">
           <div class="field">
             <label for="resName">Imię i nazwisko <span class="req">*</span></label>
-            <input id="resName" type="text" placeholder="np. Anna Kowalska" required />
+            <input id="resName" type="text" placeholder="np. Anna Kowalska" data-i18n-placeholder="np. Anna Kowalska" required />
             <small class="err" data-err="resName"></small>
           </div>
           <div class="field">
             <label for="resPhone">Numer telefonu <span class="req">*</span></label>
-            <input id="resPhone" type="tel" inputmode="tel" placeholder="np. 601 234 567" required />
+            <input id="resPhone" type="tel" inputmode="tel" placeholder="np. 601 234 567" data-i18n-placeholder="np. 601 234 567" required />
             <small class="err" data-err="resPhone"></small>
           </div>
         </div>
@@ -150,6 +160,7 @@
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/data.js"></script>
   <script src="js/place-images.js"></script>
   <script src="js/dish-images.js"></script>

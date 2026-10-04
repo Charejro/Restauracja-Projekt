@@ -13,11 +13,17 @@
 <body>
   <div class="topbar">
     <div class="wrap topbar__inner">
-      <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
-      <span class="topbar__sep">•</span>
-      <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
-      <span class="topbar__sep">•</span>
-      <span>Codziennie 11:00 – 22:00</span>
+      <div class="topbar__info">
+        <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
+        <span class="topbar__sep">•</span>
+        <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
+        <span class="topbar__sep">•</span>
+        <span>Codziennie 11:00 – 22:00</span>
+      </div>
+      <div class="lang" id="langSwitch" role="group" aria-label="Język / Language">
+        <button class="lang__btn is-active" data-lang="pl" type="button">PL</button>
+        <button class="lang__btn" data-lang="en" type="button">EN</button>
+      </div>
     </div>
   </div>
 
@@ -36,9 +42,10 @@
         <a href="zamow.html">Zamów online</a>
         <a href="rezerwacja.html">Rezerwacja</a>
         <a href="kontakt.html" class="is-current">Kontakt</a>
+        <a href="galeria.html">Galeria</a>
       </nav>
       <div class="nav__actions">
-        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk" data-i18n-aria-label="cart.aria">
           🛒 <span class="cart-btn__label">Koszyk</span>
           <span class="badge" id="cartCount">0</span>
         </button>
@@ -50,7 +57,7 @@
   </header>
 
   <section class="page-hero page-hero--photo">
-    <img class="page-hero__img" data-place="port" alt="Restauracja Portowa Fala w porcie rybackim" />
+    <img class="page-hero__img" data-place="port" data-i18n-alt="Restauracja Portowa Fala w porcie rybackim" alt="Restauracja Portowa Fala w porcie rybackim" />
     <div class="page-hero__shade" aria-hidden="true"></div>
     <div class="wrap page-hero__content">
       <p class="eyebrow eyebrow--light">Kontakt</p>
@@ -77,10 +84,10 @@
           <a class="btn btn--ghost" href="rezerwacja.html">Zarezerwuj stolik</a>
         </div>
       </div>
-      <div class="contact__map" aria-label="Mapa okolicy portu">
-        <div class="contact__map-water">Bałtyk</div>
-        <div class="contact__pin">⚓ Portowa Fala</div>
-        <div class="contact__map-land">Władysławowo</div>
+      <div class="map-embed">
+        <iframe data-map="port" title="Mapa — Portowa Fala, Port Rybacki 4, Władysławowo"
+                data-i18n-title="Mapa — Portowa Fala, Port Rybacki 4, Władysławowo"
+                loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </section>
@@ -92,6 +99,7 @@
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/data.js"></script>
   <script src="js/place-images.js"></script>
   <script src="js/dish-images.js"></script>

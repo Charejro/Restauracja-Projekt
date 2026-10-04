@@ -1,16 +1,20 @@
 /* ===================================================================
-   Portowa Fala — wspólna logika stron
-   Strona główna: opis + zdjęcia + przyciski (Menu / Rezerwacja)
-   Podstrony: menu, zamówienie, rezerwacja
+   Portowa Fala — wspólna logika stron (PL / EN)
    =================================================================== */
 (function () {
   "use strict";
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-  const zl = (n) => n.toFixed(2).replace(".", ",") + " zł";
+  const I18N = window.I18N;
+  const t = (key, vars) => (I18N ? I18N.t(key, vars) : key);
+  const pick = (obj, field) => (I18N ? I18N.pick(obj, field) : (obj ? obj[field] : ""));
   const MENU = window.MENU || {};
   const TAGS = window.MENU_TAGS || {};
+
+  const zl = (n) => (I18N && I18N.lang === "en")
+    ? "PLN " + n.toFixed(2)
+    : n.toFixed(2).replace(".", ",") + " zł";
 
   /* ------------------------------------------------------------------
      1. KOSZYK (zapisywany w przeglądarce — działa między podstronami)
@@ -21,8 +25,7 @@
   function loadCart() {
     try {
       const raw = localStorage.getItem(CART_KEY);
-      const arr = raw ? JSON.parse(raw) : [];
-      cart = new Map(arr);
+      cart = new Map(raw ? JSON.parse(raw) : []);
     } catch (e) {
       cart = new Map();
     }
@@ -31,9 +34,9 @@
     try { localStorage.setItem(CART_KEY, JSON.stringify(Array.from(cart.entries()))); } catch (e) {}
   }
   function cartTotal() {
-    let t = 0;
-    cart.forEach((it) => { t += it.price * it.qty; });
-    return t;
+    let sum = 0;
+    cart.forEach((it) => { sum += it.price * it.qty; });
+    return sum;
   }
   function cartCount() {
     let c = 0;
@@ -42,16 +45,16 @@
   }
 
   /* ------------------------------------------------------------------
-     2. ELEMENTY WSPÓLNE (panel koszyka + powiadomienia) — wstrzykiwane
+     2. ELEMENTY WSPÓLNE (panel koszyka + powiadomienia)
      ------------------------------------------------------------------ */
   function ensureChrome() {
     if (!$("#toast")) {
-      const t = document.createElement("div");
-      t.className = "toast";
-      t.id = "toast";
-      t.setAttribute("role", "status");
-      t.setAttribute("aria-live", "polite");
-      document.body.appendChild(t);
+      const el = document.createElement("div");
+      el.className = "toast";
+      el.id = "toast";
+      el.setAttribute("role", "status");
+      el.setAttribute("aria-live", "polite");
+      document.body.appendChild(el);
     }
     if (!$("#cartDrawer")) {
       const overlay = document.createElement("div");
@@ -61,40 +64,50 @@
       drawer.className = "drawer";
       drawer.id = "cartDrawer";
       drawer.setAttribute("aria-label", "Koszyk");
+      drawer.setAttribute("data-i18n-aria-label", "cart.aria");
       drawer.setAttribute("aria-hidden", "true");
       drawer.innerHTML = `
         <div class="drawer__head">
-          <h3>Twój koszyk</h3>
+          <h3 data-i18n="cart.title">Twój koszyk</h3>
           <button class="icon-btn" id="closeCart" type="button" aria-label="Zamknij">✕</button>
         </div>
-        <div class="drawer__body" id="cartItems"></div>
+        <div class="drawer__body" id="cartItems" data-i18n-skip></div>
         <div class="drawer__foot">
-          <div class="summary-total"><span>Razem</span><strong id="cartTotal">0,00 zł</strong></div>
-          <a class="btn btn--primary btn--block" href="zamow.html" id="cartToOrder">Przejdź do zamówienia</a>
+          <div class="summary-total"><span data-i18n="cart.total">Razem</span><strong id="cartTotal" data-i18n-skip>0,00 zł</strong></div>
+          <a class="btn btn--primary btn--block" href="zamow.html" data-i18n="cart.goToOrder">Przejdź do zamówienia</a>
         </div>`;
       document.body.appendChild(overlay);
       document.body.appendChild(drawer);
 
       overlay.addEventListener("click", closeCart);
       $("#closeCart").addEventListener("click", closeCart);
-      closeCart();
     }
 
-    $("#cartBtn") && $("#cartBtn").addEventListener("click", openCart);
-    $("#cartItems") && $("#cartItems").addEventListener("click", (e) => {
-      const inc = e.target.closest("[data-inc]");
-      const dec = e.target.closest("[data-dec]");
-      const rem = e.target.closest("[data-remove]");
-      if (inc) changeQty(inc.dataset.inc, 1);
-      if (dec) changeQty(dec.dataset.dec, -1);
-      if (rem) removeFromCart(rem.dataset.remove);
-    });
+    const cartBtn = $("#cartBtn");
+    if (cartBtn && !cartBtn.dataset.bound) {
+      cartBtn.dataset.bound = "1";
+      cartBtn.addEventListener("click", openCart);
+    }
+    const items = $("#cartItems");
+    if (items && !items.dataset.bound) {
+      items.dataset.bound = "1";
+      items.addEventListener("click", (e) => {
+        const inc = e.target.closest("[data-inc]");
+        const dec = e.target.closest("[data-dec]");
+        const rem = e.target.closest("[data-remove]");
+        if (inc) changeQty(inc.dataset.inc, 1);
+        if (dec) changeQty(dec.dataset.dec, -1);
+        if (rem) removeFromCart(rem.dataset.remove);
+      });
+    }
   }
 
   function openCart() {
-    $("#cartDrawer").classList.add("is-open");
-    $("#drawerOverlay").classList.add("is-open");
-    $("#cartDrawer").setAttribute("aria-hidden", "false");
+    const d = $("#cartDrawer"), o = $("#drawerOverlay");
+    if (!d) return;
+    d.classList.add("is-open");
+    if (o) o.classList.add("is-open");
+    d.setAttribute("aria-hidden", "false");
   }
   function closeCart() {
     const d = $("#cartDrawer"), o = $("#drawerOverlay");
@@ -110,11 +123,12 @@
     else cart.set(id, { id: item.id, name: item.name, price: item.price, qty: 1 });
     saveCart();
     renderCart();
-    if (!silent) toast(`Dodano: ${item.name}`, "ok");
-    if ($("#cartBtn") && !silent) {
-      $("#cartBtn").classList.remove("is-bump");
-      void $("#cartBtn").offsetWidth;
-      $("#cartBtn").classList.add("is-bump");
+    if (!silent) toast(t("toast.added", { name: pick(item, "name") }), "ok");
+    const btn = $("#cartBtn");
+    if (btn && !silent) {
+      btn.classList.remove("is-bump");
+      void btn.offsetWidth;
+      btn.classList.add("is-bump");
     }
   }
 
@@ -140,21 +154,23 @@
     const box = $("#cartItems");
     if (box) {
       if (cart.size === 0) {
-        box.innerHTML = `<p class="muted">Koszyk jest pusty. Dodaj dania z <a href="menu.html">menu</a>.</p>`;
+        box.innerHTML = `<p class="muted">${t("cart.empty")}</p>`;
       } else {
         box.innerHTML = Array.from(cart.values()).map((it) => {
           const img = window.dishArt ? window.dishArt(it) : "";
+          const item = window.findMenuItem ? window.findMenuItem(it.id) : null;
+          const name = item ? pick(item, "name") : it.name;
           return `
           <div class="cart-item">
             <img class="cart-item__img" src="${img}" alt="" width="46" height="46" />
             <div class="cart-item__info">
-              <div class="cart-item__name">${it.name}</div>
-              <div class="cart-item__price">${zl(it.price)} / szt.</div>
+              <div class="cart-item__name">${name}</div>
+              <div class="cart-item__price">${zl(it.price)} / ${I18N && I18N.lang === "en" ? "pc." : "szt."}</div>
               <div class="cart-item__qty">
-                <button class="qty-btn" type="button" data-dec="${it.id}" aria-label="Mniej">−</button>
+                <button class="qty-btn" type="button" data-dec="${it.id}" aria-label="−">−</button>
                 <span>${it.qty}</span>
-                <button class="qty-btn" type="button" data-inc="${it.id}" aria-label="Więcej">+</button>
-                <button class="cart-item__remove" type="button" data-remove="${it.id}">usuń</button>
+                <button class="qty-btn" type="button" data-inc="${it.id}" aria-label="+">+</button>
+                <button class="cart-item__remove" type="button" data-remove="${it.id}">${t("cart.remove")}</button>
               </div>
             </div>
             <strong>${zl(it.price * it.qty)}</strong>
@@ -170,31 +186,40 @@
 
   function cartToText() {
     if (cart.size === 0) return "";
-    return Array.from(cart.values()).map((it) => `${it.qty}× ${it.name}`).join(", ");
+    return Array.from(cart.values()).map((it) => {
+      const item = window.findMenuItem ? window.findMenuItem(it.id) : null;
+      return `${it.qty}× ${item ? pick(item, "name") : it.name}`;
+    }).join(", ");
   }
 
   /* ------------------------------------------------------------------
      3. MENU (menu.html)
      ------------------------------------------------------------------ */
+  let currentCat = "zupy";
+
   function renderMenu(cat) {
     const grid = $("#menuGrid");
     if (!grid) return;
-    const items = MENU[cat] || [];
+    if (cat) currentCat = cat;
+    const items = MENU[currentCat] || [];
     grid.innerHTML = items.map((it, i) => {
-      const src = window.dishArt ? window.dishArt(it, cat) : "";
+      const src = window.dishArt ? window.dishArt(it, currentCat) : "";
+      const name = pick(it, "name");
+      const desc = pick(it, "desc");
+      const tag = it.tag ? t(it.tag) : "";
       return `
       <article class="dish" style="animation-delay:${i * 40}ms">
-        <img class="dish__photo" src="${src}" alt="${it.name}" width="400" height="250" />
+        <img class="dish__photo" src="${src}" alt="${name}" width="400" height="250" />
         <div class="dish__body">
-          ${it.tag ? `<span class="dish__tag">${it.tag}</span>` : ""}
+          ${tag ? `<span class="dish__tag">${tag}</span>` : ""}
           <div class="dish__head">
-            <h3 class="dish__name">${it.name}</h3>
+            <h3 class="dish__name">${name}</h3>
             <span class="dish__price">${zl(it.price)}</span>
           </div>
-          <p class="dish__desc">${it.desc}</p>
+          <p class="dish__desc">${desc}</p>
           <div class="dish__foot">
-            <span class="dish__allerg">${TAGS[cat] || ""}</span>
-            <button class="btn btn--ghost" type="button" data-add="${it.id}">+ Dodaj</button>
+            <span class="dish__allerg">${t(TAGS[currentCat] || "")}</span>
+            <button class="btn btn--ghost" type="button" data-add="${it.id}">${t("+ Dodaj")}</button>
           </div>
         </div>
       </article>`;
@@ -206,7 +231,7 @@
     if (!grid) return;
     $$("#menuTabs .tab").forEach((tab) => {
       tab.addEventListener("click", () => {
-        $$("#menuTabs .tab").forEach((t) => { t.classList.remove("is-active"); t.setAttribute("aria-selected", "false"); });
+        $$("#menuTabs .tab").forEach((x) => { x.classList.remove("is-active"); x.setAttribute("aria-selected", "false"); });
         tab.classList.add("is-active");
         tab.setAttribute("aria-selected", "true");
         renderMenu(tab.dataset.cat);
@@ -226,10 +251,13 @@
     const list = $("#summaryList");
     if (!list) return;
     if (cart.size === 0) {
-      list.innerHTML = `<li class="muted">Koszyk jest pusty.</li>`;
+      list.innerHTML = `<li class="muted">${t("Koszyk jest pusty.")}</li>`;
     } else {
-      list.innerHTML = Array.from(cart.values()).map((it) =>
-        `<li><span>${it.qty}× ${it.name}</span><span>${zl(it.price * it.qty)}</span></li>`).join("");
+      list.innerHTML = Array.from(cart.values()).map((it) => {
+        const item = window.findMenuItem ? window.findMenuItem(it.id) : null;
+        const name = item ? pick(item, "name") : it.name;
+        return `<li><span>${it.qty}× ${name}</span><span>${zl(it.price * it.qty)}</span></li>`;
+      }).join("");
     }
     const total = cartTotal();
     const st = $("#summaryTotal");
@@ -246,12 +274,13 @@
 
     const payField = $("#payField");
     const addressField = $("#orderAddress") ? $("#orderAddress").closest(".field") : null;
+    const addressWrap = $("#orderAddress") ? $("#orderAddress").closest(".field") : null;
 
     function syncFulfilment() {
       const val = orderForm.querySelector('input[name="fulfilment"]:checked').value;
       const isDelivery = val === "dowóz";
       if (payField) payField.style.display = isDelivery ? "" : "none";
-      if (addressField) addressField.style.display = isDelivery ? "" : "none";
+      if (addressWrap) addressWrap.style.display = isDelivery ? "" : "none";
       const addr = $("#orderAddress");
       if (addr) addr.required = isDelivery;
     }
@@ -260,11 +289,11 @@
 
     const link = $("#addCartToForm");
     if (link) link.addEventListener("click", () => {
-      if (cart.size === 0) { toast("Najpierw dodaj coś z menu.", "err"); return; }
+      if (cart.size === 0) { toast(t("toast.addFirst"), "err"); return; }
       const field = $("#orderFood");
       field.value = cartToText();
       clearError(field);
-      toast("Koszyk wstawiony do zamówienia", "ok");
+      toast(t("toast.cartInserted"), "ok");
     });
 
     orderForm.addEventListener("input", (e) => {
@@ -279,22 +308,21 @@
       const food = $("#orderFood");
       const fulfilment = orderForm.querySelector('input[name="fulfilment"]:checked').value;
 
-      if (phone.value.replace(/\D/g, "").length < 9) { setError(phone, "Podaj poprawny numer telefonu (min. 9 cyfr)."); ok = false; }
-      if (fulfilment === "dowóz" && address.value.trim().length < 5) { setError(address, "Podaj pełny adres dostawy."); ok = false; }
-      if (food.value.trim().length < 3) { setError(food, "Napisz, co chcesz zjeść."); ok = false; }
-      if (!ok) { toast("Uzupełnij brakujące dane.", "err"); return; }
+      if (phone.value.replace(/\D/g, "").length < 9) { setError(phone, t("err.phoneMin")); ok = false; }
+      if (fulfilment === "dowóz" && address.value.trim().length < 5) { setError(address, t("err.address")); ok = false; }
+      if (food.value.trim().length < 3) { setError(food, t("err.food")); ok = false; }
+      if (!ok) { toast(t("toast.missing"), "err"); return; }
 
       const payment = fulfilment === "dowóz"
         ? orderForm.querySelector('input[name="payment"]:checked').value
-        : "płatność przy odbiorze";
+        : "onsite";
       const total = cartTotal();
-      const kwota = fulfilment === "dowóz" && payment === "zaliczka"
-        ? `Zaliczka ${zl(total * 0.1)} (10%), resztę płacisz kurierowi.`
-        : fulfilment === "dowóz"
-          ? `Płatność z góry: ${zl(total)}.`
-          : "Płatność na miejscu.";
+      let kwota;
+      if (fulfilment !== "dowóz") kwota = t("pay.onsite");
+      else if (payment === "zaliczka") kwota = t("pay.deposit", { amount: zl(total * 0.1) });
+      else kwota = t("pay.prepay", { amount: zl(total) });
 
-      toast(`Zamówienie przyjęte! Oddzwonimy na ${phone.value.trim()}. ${kwota}`, "ok");
+      toast(t("toast.orderOk", { phone: phone.value.trim(), payment: kwota }), "ok");
       orderForm.reset();
       syncFulfilment();
       cart.clear();
@@ -306,7 +334,6 @@
   /* ------------------------------------------------------------------
      5. REZERWACJA (rezerwacja.html)
      ------------------------------------------------------------------ */
-  const ZONE_NAME = { window: "przy oknie (widok na morze)", sala: "sala główna", taras: "taras na zewnątrz" };
   const TABLES = [
     { id: "T1", label: "10", x: 18, y: 20, seats: 2, shape: "round", zone: "taras" },
     { id: "T2", label: "11", x: 39, y: 17, seats: 4, shape: "round", zone: "taras" },
@@ -322,23 +349,14 @@
     { id: "S3", label: "8", x: 61, y: 74, seats: 6, shape: "square", zone: "sala" },
     { id: "S4", label: "9", x: 80, y: 72, seats: 4, shape: "square", zone: "sala" }
   ];
+  const EMOJI = { 0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️", 45: "🌫️", 48: "🌫️", 51: "🌦️", 53: "🌦️", 55: "🌦️", 61: "🌧️", 63: "🌧️", 65: "🌧️", 66: "🌨️", 67: "🌨️", 71: "🌨️", 73: "🌨️", 75: "❄️", 80: "🌦️", 81: "🌧️", 82: "⛈️", 95: "⛈️", 96: "⛈️", 99: "⛈️" };
 
   let selectedTable = null;
   let booked = new Set();
   let weather = { open: true, temp: null, code: null, wind: null, demo: true };
 
-  const COORDS = { lat: 54.7974, lon: 18.4003 }; // Władysławowo
-  const WMO = {
-    0: ["bezchmurnie", "☀️"], 1: ["głównie bezchmurnie", "🌤️"], 2: ["częściowe zachmurzenie", "⛅"],
-    3: ["zachmurzenie", "☁️"], 45: ["mgła", "🌫️"], 48: ["mgła osadzająca", "🌫️"],
-    51: ["mżawka", "🌦️"], 53: ["mżawka", "🌦️"], 55: ["mżawka", "🌦️"],
-    61: ["deszcz", "🌧️"], 63: ["deszcz", "🌧️"], 65: ["ulewa", "🌧️"],
-    66: ["deszcz ze śniegiem", "🌨️"], 67: ["deszcz ze śniegiem", "🌨️"],
-    71: ["śnieg", "🌨️"], 73: ["śnieg", "🌨️"], 75: ["śnieg", "❄️"],
-    80: ["przelotne opady", "🌦️"], 81: ["przelotne opady", "🌧️"], 82: ["nawałnica", "⛈️"],
-    95: ["burza", "⛈️"], 96: ["burza z gradem", "⛈️"], 99: ["burza z gradem", "⛈️"]
-  };
-  const weatherInfo = (code) => WMO[code] || ["zmienne warunki", "🌥️"];
+  const COORDS = { lat: 54.7974, lon: 18.4003 };
+  const zoneName = (zone) => t("zone." + zone);
 
   function evaluateWeather(temp, code, wind) {
     const precipitation = (code >= 51 && code <= 67) || (code >= 71 && code <= 77) ||
@@ -364,30 +382,31 @@
   function renderWeather() {
     const box = $("#weatherBox");
     if (!box) return;
-    const [text, emoji] = weather.code != null ? weatherInfo(weather.code) : [];
-    $("#weatherIcon").textContent = weather.demo ? (weather.open ? "🌤️" : "🌧️") : emoji;
-    $("#weatherTemp").textContent = weather.temp != null
-      ? `${Math.round(weather.temp)}°C · ${text}`
-      : (weather.open ? "Taras otwarty" : "Taras zamknięty");
-    $("#weatherDesc").textContent = weather.demo
-      ? "Władysławowo · warunki szacowane (chwilowy brak danych)"
-      : `Władysławowo · wiatr ${Math.round(weather.wind)} km/h · dane na żywo`;
-    $("#weatherSeats").textContent = weather.open
-      ? "✔ Stoliki na tarasie dostępne do rezerwacji"
-      : "✖ Rezerwacja tarasu wstrzymana — wybierz stolik w środku";
+    const tempEl = $("#weatherTemp"), descEl = $("#weatherDesc"), seatsEl = $("#weatherSeats"), iconEl = $("#weatherIcon");
+
+    if (tempEl) {
+      tempEl.textContent = weather.temp != null
+        ? `${Math.round(weather.temp)}°C · ${I18N ? I18N.weatherDesc(weather.code) : ""}`
+        : (weather.open ? t("weather.terraceOpen") : t("weather.terraceClosed"));
+    }
+    if (iconEl) iconEl.textContent = weather.demo ? (weather.open ? "🌤️" : "🌧️") : (EMOJI[weather.code] || "🌥️");
+    if (descEl) {
+      descEl.textContent = weather.demo
+        ? t("weather.demo")
+        : t("weather.live", { wind: Math.round(weather.wind) });
+    }
+    if (seatsEl) seatsEl.textContent = weather.open ? t("weather.open") : t("weather.closed");
+
     box.classList.toggle("weather--open", weather.open);
     box.classList.toggle("weather--closed", !weather.open);
     const floor = $("#floor");
     if (floor) floor.classList.toggle("floor--weather-closed", !weather.open);
     const label = $("#terraceLabel");
-    if (label) {
-      label.textContent = weather.open
-        ? "☀️ TARAS na zewnątrz — przed oknem panoramicznym"
-        : "🌧️ TARAS zamknięty — zła pogoda";
-    }
+    if (label) label.textContent = weather.open ? t("terrace.open") : t("terrace.closed");
+
     if (selectedTable && !weather.open) {
-      const t = TABLES.find((x) => x.id === selectedTable);
-      if (t && t.zone === "taras") selectedTable = null;
+      const tb = TABLES.find((x) => x.id === selectedTable);
+      if (tb && tb.zone === "taras") selectedTable = null;
     }
     renderFloor();
     renderPicked();
@@ -410,30 +429,33 @@
     const date = $("#resDate").value, time = $("#resTime").value;
     const guests = Number($("#resGuests").value);
     $$(".table", floor).forEach((el) => el.remove());
-    TABLES.forEach((t) => {
+    TABLES.forEach((tb) => {
       const el = document.createElement("button");
       el.type = "button";
-      el.className = `table table--${t.shape} table--zone-${t.zone}`;
-      el.style.left = t.x + "%";
-      el.style.top = t.y + "%";
-      const size = t.seats >= 6 ? 74 : t.seats === 4 ? 62 : 50;
+      el.className = `table table--${tb.shape} table--zone-${tb.zone}`;
+      el.style.left = tb.x + "%";
+      el.style.top = tb.y + "%";
+      const size = tb.seats >= 6 ? 74 : tb.seats === 4 ? 62 : 50;
       el.style.width = size + "px";
       el.style.height = size + "px";
-      el.dataset.table = t.id;
+      el.dataset.table = tb.id;
 
-      const taken = isTaken(t.id, date, time);
-      const tooSmall = t.seats < guests;
-      const outdoorClosed = t.zone === "taras" && !weather.open;
+      const taken = isTaken(tb.id, date, time);
+      const tooSmall = tb.seats < guests;
+      const outdoorClosed = tb.zone === "taras" && !weather.open;
 
-      if (selectedTable === t.id && !taken && !tooSmall && !outdoorClosed) el.classList.add("table--selected");
+      if (selectedTable === tb.id && !taken && !tooSmall && !outdoorClosed) el.classList.add("table--selected");
       else if (taken) el.classList.add("table--taken");
       else if (outdoorClosed) el.classList.add("table--weather");
       else if (tooSmall) el.classList.add("table--small");
       else el.classList.add("table--free");
 
-      const reason = taken ? " • zajęty" : outdoorClosed ? " • taras zamknięty (zła pogoda)" : tooSmall ? " • za mały" : " • wolny";
-      el.innerHTML = `<span>${t.label}<small>${t.seats} os.</small></span>`;
-      el.title = `Stolik ${t.label} • ${t.seats} os. • ${ZONE_NAME[t.zone]}${reason}`;
+      const reason = taken ? t("reason.taken")
+        : outdoorClosed ? t("reason.weather")
+          : tooSmall ? t("reason.small")
+            : t("reason.free");
+      el.innerHTML = `<span>${tb.label}<small>${tb.seats}${I18N && I18N.lang === "en" ? " p." : " os."}</small></span>`;
+      el.title = t("res.tableTitle", { label: tb.label, seats: tb.seats, zone: zoneName(tb.zone), reason });
       if (taken || tooSmall || outdoorClosed) el.disabled = true;
       floor.appendChild(el);
     });
@@ -444,30 +466,28 @@
     if (!box) return;
     const sum = $("#resFormSummary");
     if (!selectedTable) {
-      box.innerHTML = `<p class="muted">Nie wybrano jeszcze stolika.</p>`;
+      box.innerHTML = `<p class="muted">${t("res.none")}</p>`;
       if (sum) sum.innerHTML = "";
       return;
     }
-    const t = TABLES.find((x) => x.id === selectedTable);
+    const tb = TABLES.find((x) => x.id === selectedTable);
     const date = $("#resDate").value, time = $("#resTime").value, guests = $("#resGuests").value;
-    const outdoorNote = t.zone === "taras" ? `<p class="muted">Stolik na wolnym powietrzu — potwierdzimy go, jeśli pogoda dopisze.</p>` : "";
-    box.innerHTML = `<p>Stolik <strong>${t.label}</strong> • ${t.seats} os.<br>${ZONE_NAME[t.zone]}</p>
+    const outdoorNote = tb.zone === "taras" ? `<p class="muted">${t("res.outdoor")}</p>` : "";
+    box.innerHTML = `<p>${t("res.picked", { label: tb.label, seats: tb.seats })}<br>${zoneName(tb.zone)}</p>
       ${outdoorNote}
-      <p class="muted">${date} o ${time} • ${guests} os.</p>`;
-    if (sum) sum.innerHTML = `Wybrano: <b>stolik ${t.label}</b> (${ZONE_NAME[t.zone]}), <b>${date}</b> o <b>${time}</b> dla <b>${guests} os.</b>`;
+      <p class="muted">${t("res.pickedMeta", { date, time, guests })}</p>`;
+    if (sum) sum.innerHTML = t("res.summary", { label: tb.label, zone: zoneName(tb.zone), date, time, guests });
   }
 
   function initReservationPage() {
-    const floor = $("#floor");
-    if (!floor) return;
-
+    if (!$("#floor")) return;
     const resDate = $("#resDate"), resTime = $("#resTime"), resGuests = $("#resGuests");
 
     for (let h = 12; h <= 21; h++) {
       for (const m of ["00", "30"]) {
-        const t = `${String(h).padStart(2, "0")}:${m}`;
         const opt = document.createElement("option");
-        opt.value = t; opt.textContent = t;
+        opt.value = `${String(h).padStart(2, "0")}:${m}`;
+        opt.textContent = opt.value;
         resTime.appendChild(opt);
       }
     }
@@ -476,12 +496,13 @@
     resDate.value = today;
     resDate.min = today;
 
+    const floor = $("#floor");
     floor.addEventListener("click", (e) => {
       const el = e.target.closest(".table");
       if (!el || el.disabled) return;
-      const t = TABLES.find((x) => x.id === el.dataset.table);
-      if (!t) return;
-      selectedTable = t.id;
+      const tb = TABLES.find((x) => x.id === el.dataset.table);
+      if (!tb) return;
+      selectedTable = tb.id;
       renderFloor();
       renderPicked();
     });
@@ -496,15 +517,14 @@
       e.preventDefault();
       const name = $("#resName"), phone = $("#resPhone");
       let ok = true;
-      if (name.value.trim().length < 3) { setError(name, "Podaj imię i nazwisko."); ok = false; } else clearError(name);
-      if (phone.value.replace(/\D/g, "").length < 9) { setError(phone, "Podaj poprawny numer telefonu."); ok = false; } else clearError(phone);
-      if (!selectedTable) { toast("Wybierz stolik na planie sali.", "err"); return; }
-      if (!ok) { toast("Uzupełnij dane rezerwacji.", "err"); return; }
+      if (name.value.trim().length < 3) { setError(name, t("err.resName")); ok = false; } else clearError(name);
+      if (phone.value.replace(/\D/g, "").length < 9) { setError(phone, t("err.resPhone")); ok = false; } else clearError(phone);
+      if (!selectedTable) { toast(t("err.pickTable"), "err"); return; }
+      if (!ok) { toast(t("err.resMissing"), "err"); return; }
 
-      const t = TABLES.find((x) => x.id === selectedTable);
-      const key = `${resDate.value}|${resTime.value}|${selectedTable}`;
-      booked.add(key);
-      toast(`Stolik ${t.label} zarezerwowany na ${resDate.value} o ${resTime.value}. Do zobaczenia!`, "ok");
+      const tb = TABLES.find((x) => x.id === selectedTable);
+      booked.add(`${resDate.value}|${resTime.value}|${selectedTable}`);
+      toast(t("toast.booked", { table: tb.label, date: resDate.value, time: resTime.value }), "ok");
       e.target.reset();
       resDate.value = today;
       resTime.value = "18:00";
@@ -519,7 +539,7 @@
   }
 
   /* ------------------------------------------------------------------
-     6. WALIDACJA, POWIADOMIENIA, NAWIGACJA, OBRAZY MIEJSC
+     6. WALIDACJA, POWIADOMIENIA, NAWIGACJA, OBRAZY
      ------------------------------------------------------------------ */
   function setError(field, message) {
     const wrap = field.closest(".field");
@@ -559,10 +579,24 @@
 
   function initPlaceImages() {
     if (!window.placeArt) return;
-    $$("[data-place]").forEach((el) => {
-      const kind = el.dataset.place;
-      el.src = window.placeArt(kind);
-    });
+    $$("[data-place]").forEach((el) => { el.src = window.placeArt(el.dataset.place); });
+  }
+
+  /* Mapa Google — Port Rybacki, Władysławowo */
+  const MAP_QUERY = "54.7942,18.4178";
+  function initMaps() {
+    const frames = $$("[data-map]");
+    if (!frames.length) return;
+    const hl = (I18N && I18N.lang === "en") ? "en" : "pl";
+    const src = `https://maps.google.com/maps?q=${MAP_QUERY}&z=15&hl=${hl}&output=embed`;
+    frames.forEach((f) => { if (f.getAttribute("src") !== src) f.setAttribute("src", src); });
+  }
+
+  function refreshDynamic() {
+    renderMenu();
+    renderCart();
+    initMaps();
+    if ($("#floor")) { renderWeather(); }
   }
 
   /* ------------------------------------------------------------------
@@ -572,8 +606,12 @@
   ensureChrome();
   initNav();
   initPlaceImages();
+  initMaps();
   initMenuPage();
   initOrderPage();
   initReservationPage();
   renderCart();
+  if (I18N) I18N.refresh();
+
+  document.addEventListener("pf:langchange", refreshDynamic);
 })();

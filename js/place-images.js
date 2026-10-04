@@ -241,6 +241,175 @@
       <g stroke="#2b2b2b" stroke-width="3" fill="none" opacity="0.75">
         <path d="M600 200 q12 -10 24 0"/><path d="M618 200 q12 -10 24 0"/>
         <path d="M480 160 q12 -10 24 0"/>
+      </g>`,
+
+    /* Świeży połów na lodzie — karta menu */
+    catch: () => `
+      <defs>
+        <linearGradient id="cold" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1d4c63"/><stop offset="1" stop-color="#0a2130"/>
+        </linearGradient>
+      </defs>
+      <rect width="${W}" height="${H}" fill="url(#cold)"/>
+      <g fill="#bfe3f2" opacity="0.45">
+        <polygon points="40,110 180,70 240,170 110,220"/>
+        <polygon points="290,50 430,30 470,140 320,170"/>
+        <polygon points="690,80 850,50 900,160 740,195"/>
+        <polygon points="960,130 1110,100 1160,215 1000,245"/>
+        <polygon points="110,400 260,360 320,470 170,510"/>
+        <polygon points="520,530 660,490 720,595 570,635"/>
+        <polygon points="880,460 1020,430 1070,545 920,575"/>
+      </g>
+      <g fill="#ffffff" opacity="0.22">
+        <polygon points="420,220 470,205 490,245 440,262"/>
+        <polygon points="760,300 812,286 830,332 780,346"/>
+        <polygon points="330,600 380,586 398,626 348,642"/>
+      </g>
+      <g>
+        <g transform="translate(360 330) rotate(-14)">
+          <ellipse rx="168" ry="60" fill="#d7e0e6"/>
+          <path d="M168 -42 l82 42 -82 42 z" fill="#b6c4ce"/>
+          <path d="M20 -56 q52 -34 98 -6" fill="none" stroke="#c3cfd8" stroke-width="10"/>
+          <circle cx="-118" cy="-14" r="10" fill="#1f303c"/>
+          <g stroke="#a8b8c2" stroke-width="5" opacity="0.65"><path d="M-88 -30 q20 30 0 60"/><path d="M-38 -40 q20 40 0 80"/><path d="M22 -40 q18 40 -2 78"/></g>
+        </g>
+        <g transform="translate(830 400) rotate(10) scale(0.85)">
+          <ellipse rx="168" ry="60" fill="#e2c9b8"/>
+          <path d="M168 -42 l82 42 -82 42 z" fill="#c8a992"/>
+          <path d="M20 -56 q52 -34 98 -6" fill="none" stroke="#d8bcab" stroke-width="10"/>
+          <circle cx="-118" cy="-14" r="10" fill="#33241c"/>
+          <g stroke="#c09c86" stroke-width="5" opacity="0.6"><path d="M-88 -30 q20 30 0 60"/><path d="M-38 -40 q20 40 0 80"/></g>
+        </g>
+        <g transform="translate(600 560) rotate(-4) scale(0.72)">
+          <ellipse rx="168" ry="60" fill="#c9d8e0"/>
+          <path d="M168 -42 l82 42 -82 42 z" fill="#a9bcc6"/>
+          <circle cx="-118" cy="-14" r="10" fill="#1f303c"/>
+        </g>
+      </g>
+      <g transform="rotate(-16 250 520)">
+        <circle cx="250" cy="520" r="52" fill="#f6d43a" stroke="#e0b81c" stroke-width="6"/>
+        <g stroke="#e8c625" stroke-width="4"><path d="M250 474 v92"/><path d="M204 520 h92"/><path d="M218 488 l64 64"/><path d="M282 488 l-64 64"/></g>
+      </g>
+      <g stroke="#4f9e3f" stroke-width="6" stroke-linecap="round" fill="none">
+        <path d="M120 300 q30 -20 60 0"/><path d="M136 286 q20 -16 40 0"/><path d="M1010 300 q30 -20 60 0"/>
+      </g>`,
+
+    /* Nakryty stolik przy oknie — rezerwacja */
+    table: () => `
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4f7fa8"/><stop offset="0.55" stop-color="#e79b74"/>
+          <stop offset="1" stop-color="#f7c98d"/>
+        </linearGradient>
+        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2f7893"/><stop offset="1" stop-color="#12384c"/>
+        </linearGradient>
+        <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f6ecd9"/><stop offset="1" stop-color="#e3d2b3"/>
+        </linearGradient>
+      </defs>
+      <rect width="${W}" height="${H}" fill="url(#wall)"/>
+      <rect y="500" width="${W}" height="200" fill="#d7b489" opacity="0.55"/>
+      <!-- okno z widokiem -->
+      <g>
+        <rect x="150" y="60" width="900" height="380" rx="8" fill="#2a6a86" stroke="#f3e9d6" stroke-width="18"/>
+        <rect x="168" y="78" width="864" height="344" fill="url(#sky)"/>
+        <rect x="168" y="300" width="864" height="122" fill="url(#sea)"/>
+        <circle cx="860" cy="286" r="40" fill="#ffe6a2"/>
+        <g fill="#ffe3a6" opacity="0.5"><ellipse cx="860" cy="320" rx="76" ry="6"/><ellipse cx="860" cy="348" rx="120" ry="5"/></g>
+        <g stroke="#f3e9d6" stroke-width="12"><path d="M450 78 v344"/><path d="M750 78 v344"/><path d="M168 230 h864"/></g>
+      </g>
+      <!-- stół -->
+      <ellipse cx="600" cy="700" rx="620" ry="210" fill="#fffdf8"/>
+      <ellipse cx="600" cy="700" rx="620" ry="210" fill="none" stroke="#e6dac2" stroke-width="6"/>
+      <!-- talerze -->
+      <g>
+        <circle cx="360" cy="600" r="86" fill="#ffffff" stroke="#dde5ea" stroke-width="6"/>
+        <circle cx="360" cy="600" r="58" fill="none" stroke="#e9eef2" stroke-width="5"/>
+        <circle cx="360" cy="600" r="34" fill="#f2ead6"/>
+        <circle cx="840" cy="620" r="86" fill="#ffffff" stroke="#dde5ea" stroke-width="6"/>
+        <circle cx="840" cy="620" r="58" fill="none" stroke="#e9eef2" stroke-width="5"/>
+        <circle cx="840" cy="620" r="34" fill="#f2ead6"/>
+      </g>
+      <!-- sztućce -->
+      <g stroke="#c8d0d6" stroke-width="9" stroke-linecap="round">
+        <path d="M232 556 v96"/><path d="M258 556 v96"/>
+        <path d="M958 578 v96"/><path d="M984 578 v96"/>
+      </g>
+      <!-- kieliszki -->
+      <g>
+        <path d="M500 430 h72 l-10 56 a26 26 0 0 1 -52 0 z" fill="#e9f6fb" opacity="0.85" stroke="#cfe0e8" stroke-width="4"/>
+        <path d="M536 512 v56" stroke="#cfe0e8" stroke-width="6"/>
+        <ellipse cx="536" cy="572" rx="34" ry="9" fill="#cfe0e8"/>
+        <path d="M686 440 h72 l-10 56 a26 26 0 0 1 -52 0 z" fill="#e9f6fb" opacity="0.85" stroke="#cfe0e8" stroke-width="4"/>
+        <path d="M722 522 v56" stroke="#cfe0e8" stroke-width="6"/>
+        <ellipse cx="722" cy="582" rx="34" ry="9" fill="#cfe0e8"/>
+      </g>
+      <!-- świeca -->
+      <g>
+        <rect x="586" y="440" width="34" height="78" rx="8" fill="#f4ecdd" stroke="#ddd2bb" stroke-width="3"/>
+        <ellipse cx="603" cy="440" rx="17" ry="7" fill="#fff8ea"/>
+        <path d="M603 402 q16 20 0 34 q-16 -14 0 -34 z" fill="#ffcf6a"/>
+      </g>
+      <!-- lampy -->
+      <g>
+        <path d="M300 0 v54" stroke="#5c5142" stroke-width="4"/><path d="M252 54 h96 l-16 32 h-64 z" fill="#3f4a52"/>
+        <ellipse cx="300" cy="108" rx="44" ry="17" fill="#ffe9b0" opacity="0.5"/>
+        <path d="M980 0 v54" stroke="#5c5142" stroke-width="4"/><path d="M932 54 h96 l-16 32 h-64 z" fill="#3f4a52"/>
+        <ellipse cx="980" cy="108" rx="44" ry="17" fill="#ffe9b0" opacity="0.5"/>
+      </g>`,
+
+    /* Molo o zmierzchu — zamówienia online */
+    molo: () => `
+      <defs>
+        <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1b2a52"/><stop offset="0.45" stop-color="#7a5a86"/>
+          <stop offset="0.72" stop-color="#e08a6a"/><stop offset="0.88" stop-color="#f7c17e"/>
+        </linearGradient>
+        <linearGradient id="sea2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3a5f7d"/><stop offset="0.5" stop-color="#25455f"/><stop offset="1" stop-color="#0d2233"/>
+        </linearGradient>
+        <linearGradient id="deck2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#a97a4e"/><stop offset="1" stop-color="#6f4a2b"/>
+        </linearGradient>
+      </defs>
+      <rect width="${W}" height="${H}" fill="url(#dusk)"/>
+      <circle cx="900" cy="470" r="60" fill="#ffdca0"/>
+      <ellipse cx="900" cy="470" rx="300" ry="150" fill="#ffc98a" opacity="0.25"/>
+      <rect y="470" width="${W}" height="230" fill="url(#sea2)"/>
+      <g fill="#ffd9a0" opacity="0.5">
+        <ellipse cx="900" cy="500" rx="70" ry="6"/><ellipse cx="900" cy="530" rx="120" ry="5"/>
+        <ellipse cx="900" cy="570" rx="180" ry="4"/><ellipse cx="900" cy="620" rx="240" ry="3"/>
+      </g>
+      <!-- pomost -->
+      <path d="M0 700 L1200 640 L1200 700 z" fill="url(#deck2)"/>
+      <path d="M0 640 L1200 588 L1200 616 L0 668 z" fill="#8a5f3a"/>
+      <g stroke="#5c3d24" stroke-width="4" opacity="0.6">
+        <path d="M0 668 L1200 616"/><path d="M60 700 L100 646"/><path d="M320 690 L360 632"/>
+        <path d="M600 676 L640 620"/><path d="M880 664 L920 606"/><path d="M1140 652 L1180 596"/>
+      </g>
+      <!-- latarnie -->
+      <g>
+        <rect x="250" y="430" width="14" height="220" fill="#2c3a44"/>
+        <path d="M240 400 h34 l-6 32 h-22 z" fill="#f6d98a"/>
+        <circle cx="257" cy="416" r="26" fill="#ffe9b0" opacity="0.45"/>
+        <rect x="850" y="470" width="12" height="180" fill="#2c3a44"/>
+        <path d="M842 444 h28 l-6 28 h-16 z" fill="#f6d98a"/>
+        <circle cx="856" cy="458" r="22" fill="#ffe9b0" opacity="0.4"/>
+      </g>
+      <!-- łódź -->
+      <g fill="#16212c">
+        <path d="M980 490 q60 -16 120 0 l-14 26 q-46 -10 -92 0 z"/>
+        <rect x="1044" y="392" width="5" height="98"/>
+        <path d="M1049 396 l44 28 -44 26 z" fill="#22303c"/>
+        <path d="M1000 462 h88" stroke="#ffd9a0" stroke-width="5" opacity="0.6"/>
+      </g>
+      <g fill="#0e1a24">
+        <path d="M120 500 q48 -12 96 0 l-12 22 q-38 -8 -76 0 z"/>
+        <rect x="164" y="430" width="4" height="70"/>
+      </g>
+      <g stroke="#0e1a24" stroke-width="3" fill="none" opacity="0.7">
+        <path d="M560 250 q12 -10 24 0"/><path d="M578 250 q12 -10 24 0"/><path d="M700 200 q12 -10 24 0"/>
       </g>`
   };
 

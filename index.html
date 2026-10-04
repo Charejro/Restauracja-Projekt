@@ -13,11 +13,17 @@
 <body>
   <div class="topbar">
     <div class="wrap topbar__inner">
-      <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
-      <span class="topbar__sep">•</span>
-      <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
-      <span class="topbar__sep">•</span>
-      <span>Codziennie 11:00 – 22:00</span>
+      <div class="topbar__info">
+        <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
+        <span class="topbar__sep">•</span>
+        <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
+        <span class="topbar__sep">•</span>
+        <span>Codziennie 11:00 – 22:00</span>
+      </div>
+      <div class="lang" id="langSwitch" role="group" aria-label="Język / Language">
+        <button class="lang__btn is-active" data-lang="pl" type="button">PL</button>
+        <button class="lang__btn" data-lang="en" type="button">EN</button>
+      </div>
     </div>
   </div>
 
@@ -36,9 +42,10 @@
         <a href="zamow.html">Zamów online</a>
         <a href="rezerwacja.html">Rezerwacja</a>
         <a href="kontakt.html">Kontakt</a>
+        <a href="galeria.html">Galeria</a>
       </nav>
       <div class="nav__actions">
-        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk" data-i18n-aria-label="cart.aria">
           🛒 <span class="cart-btn__label">Koszyk</span>
           <span class="badge" id="cartCount">0</span>
         </button>
@@ -51,7 +58,7 @@
 
   <!-- HERO: opis restauracji + dwa przyciski -->
   <section class="hero hero--home">
-    <img class="hero__photo" data-place="panorama" alt="Panorama Bałtyku widziana z tarasu restauracji Portowa Fala" />
+    <img class="hero__photo" data-place="panorama" data-i18n-alt="Panorama Bałtyku widziana z tarasu restauracji Portowa Fala" alt="Panorama Bałtyku widziana z tarasu restauracji Portowa Fala" />
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="wrap hero__content">
       <p class="eyebrow eyebrow--light">Władysławowo • Port Rybacki</p>
@@ -73,50 +80,18 @@
     </div>
   </section>
 
-  <!-- ZDJĘCIA -->
-  <section class="section" id="galeria">
-    <div class="wrap">
-      <div class="section__head">
-        <div>
-          <p class="eyebrow">Zobacz na własne oczy</p>
-          <h2>Panorama i nasz port</h2>
-        </div>
-        <p class="section__note">Morze z tarasu, restauracja w porcie rybackim i sala z panoramicznym oknem.</p>
-      </div>
-
-      <div class="gallery">
-        <figure class="gallery__item gallery__item--wide">
-          <img data-place="panorama" alt="Panorama morza z tarasu — zachód słońca nad Bałtykiem" />
-          <figcaption>Panorama Bałtyku prosto z naszego tarasu</figcaption>
-        </figure>
-        <figure class="gallery__item">
-          <img data-place="port" alt="Restauracja Portowa Fala w porcie rybackim we Władysławowie" />
-          <figcaption>Restauracja w porcie rybackim we Władysławowie</figcaption>
-        </figure>
-        <figure class="gallery__item">
-          <img data-place="interior" alt="Sala restauracji z panoramicznym oknem na morze" />
-          <figcaption>Sala z panoramicznym oknem na morze</figcaption>
-        </figure>
-        <figure class="gallery__item">
-          <img data-place="terrace" alt="Taras restauracji nad wodą" />
-          <figcaption>Taras nad wodą — otwierany przy dobrej pogodzie</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
   <!-- O RESTAURACJI -->
   <section class="section section--sand" id="o-restauracji">
     <div class="wrap about">
       <div class="about__text">
         <p class="eyebrow">O restauracji</p>
         <h2>Stoimy tam, gdzie kończy się ląd</h2>
-        <p>
+        <p data-i18n="about.p1">
           <strong>Portowa Fala</strong> to restauracja położona bezpośrednio w porcie rybackim we Władysławowie.
           Zajmujemy dawny budynek kapitanatu — z każdej sali widać morze, a latem otwieramy taras przed
           panoramicznym oknem, dosłownie nad wodą. Nie mamy widoku „w stronę morza”. Mamy morze za szybą.
         </p>
-        <p>
+        <p data-i18n="about.p2">
           Kuchnią kieruje <strong>Ania Skiba</strong>, która od 1998 roku gotuje dla rybaków z sąsiedniego mola.
           Ryby kupujemy z pierwszego kutra, który wróci do portu — dlatego karta zmienia się razem z połowem,
           a resztę ziół i warzyw bierzemy od gospodarzy z Kaszub.
@@ -143,14 +118,36 @@
     </div>
   </section>
 
-  <!-- PRZYCISKI -->
-  <section class="cta-band">
-    <div class="wrap cta-band__inner">
+  <!-- PRZYCISKI na tle tarasu -->
+  <section class="photo-band">
+    <img class="photo-band__img" data-place="terrace"
+         data-i18n-alt="Taras restauracji nad wodą" alt="Taras restauracji nad wodą" />
+    <div class="photo-band__shade" aria-hidden="true"></div>
+    <div class="wrap photo-band__content">
+      <p class="eyebrow eyebrow--light">Taras nad wodą</p>
       <h2>Głodny? Zajrzyj do karty albo zarezerwuj stolik</h2>
-      <p class="muted">Reszta — zamówienie z dowozem i pełne menu — czeka na osobnych stronach.</p>
+      <p class="photo-band__lead">Reszta — zamówienie z dowozem i pełne menu — czeka na osobnych stronach.</p>
       <div class="actions-row actions-row--center">
         <a class="btn btn--primary btn--big" href="menu.html">Zobacz menu</a>
-        <a class="btn btn--navy btn--big" href="rezerwacja.html">Zarezerwuj stolik</a>
+        <a class="btn btn--outline btn--big" href="rezerwacja.html">Zarezerwuj stolik</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAPA -->
+  <section class="section" id="mapa">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Jak do nas trafić</p>
+          <h2>Znajdziesz nas w porcie</h2>
+        </div>
+        <p class="section__note">📌 Port Rybacki 4, 84-120 Władysławowo — wejście od strony nabrzeża, po lewej stronie budynku.</p>
+      </div>
+      <div class="map-embed map-embed--wide">
+        <iframe data-map="port" title="Mapa — Portowa Fala, Port Rybacki 4, Władysławowo"
+                data-i18n-title="Mapa — Portowa Fala, Port Rybacki 4, Władysławowo"
+                loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </section>
@@ -162,6 +159,7 @@
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/data.js"></script>
   <script src="js/place-images.js"></script>
   <script src="js/dish-images.js"></script>

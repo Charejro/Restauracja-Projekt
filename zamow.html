@@ -13,11 +13,17 @@
 <body>
   <div class="topbar">
     <div class="wrap topbar__inner">
-      <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
-      <span class="topbar__sep">•</span>
-      <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
-      <span class="topbar__sep">•</span>
-      <span>Codziennie 11:00 – 22:00</span>
+      <div class="topbar__info">
+        <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
+        <span class="topbar__sep">•</span>
+        <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
+        <span class="topbar__sep">•</span>
+        <span>Codziennie 11:00 – 22:00</span>
+      </div>
+      <div class="lang" id="langSwitch" role="group" aria-label="Język / Language">
+        <button class="lang__btn is-active" data-lang="pl" type="button">PL</button>
+        <button class="lang__btn" data-lang="en" type="button">EN</button>
+      </div>
     </div>
   </div>
 
@@ -36,9 +42,10 @@
         <a href="zamow.html" class="is-current">Zamów online</a>
         <a href="rezerwacja.html">Rezerwacja</a>
         <a href="kontakt.html">Kontakt</a>
+        <a href="galeria.html">Galeria</a>
       </nav>
       <div class="nav__actions">
-        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk" data-i18n-aria-label="cart.aria">
           🛒 <span class="cart-btn__label">Koszyk</span>
           <span class="badge" id="cartCount">0</span>
         </button>
@@ -49,8 +56,11 @@
     </div>
   </header>
 
-  <section class="page-hero">
-    <div class="wrap">
+  <section class="page-hero page-hero--photo">
+    <img class="page-hero__img" data-place="molo"
+         data-i18n-alt="Molo rybackie o zmierzchu" alt="Molo rybackie o zmierzchu" />
+    <div class="page-hero__shade" aria-hidden="true"></div>
+    <div class="wrap page-hero__content">
       <p class="eyebrow eyebrow--light">Na dowóz i na wynos</p>
       <h1>Zamów online</h1>
       <p class="page-hero__lead">Trzy rzeczy: numer telefonu, adres i co chcesz zjeść. Oddzwonimy z potwierdzeniem.</p>
@@ -62,13 +72,13 @@
       <div class="order__intro">
         <p class="eyebrow">Jak to działa</p>
         <h2>Prosto i bez konta</h2>
-        <p>Wypełnij <strong>numer telefonu</strong>, <strong>adres</strong> i <strong>co chcesz zjeść</strong>. Możesz wpisać dania ręcznie albo wrzucić je z koszyka — zdjęcia i ceny znajdziesz w <a href="menu.html">menu</a>.</p>
+        <p data-i18n="order.intro">Wypełnij <strong>numer telefonu</strong>, <strong>adres</strong> i <strong>co chcesz zjeść</strong>. Możesz wpisać dania ręcznie albo wrzucić je z koszyka — zdjęcia i ceny znajdziesz w <a href="menu.html">menu</a>.</p>
 
         <div class="pay-note pay-note--light">
           <h3>Dowóz — jak płacisz?</h3>
           <ul>
-            <li><strong>Zaliczka 10%:</strong> płacisz z góry 10% zamówienia, resztę kurierowi przy odbiorze.</li>
-            <li><strong>Płatność z góry:</strong> płacisz całość online, kurier tylko dostarcza.</li>
+            <li data-i18n="order.pay1"><strong>Zaliczka 10%:</strong> płacisz z góry 10% zamówienia, resztę kurierowi przy odbiorze.</li>
+            <li data-i18n="order.pay2"><strong>Płatność z góry:</strong> płacisz całość online, kurier tylko dostarcza.</li>
           </ul>
           <p class="muted">Odbiór osobisty w restauracji jest zawsze bez zaliczki.</p>
         </div>
@@ -85,19 +95,19 @@
 
         <div class="field">
           <label for="orderPhone">Numer telefonu <span class="req">*</span></label>
-          <input id="orderPhone" name="phone" type="tel" inputmode="tel" placeholder="np. 601 234 567" autocomplete="tel" required />
+          <input id="orderPhone" name="phone" type="tel" inputmode="tel" placeholder="np. 601 234 567" data-i18n-placeholder="np. 601 234 567" autocomplete="tel" required />
           <small class="err" data-err="phone"></small>
         </div>
 
         <div class="field">
           <label for="orderAddress">Adres dostawy <span class="req">*</span></label>
-          <input id="orderAddress" name="address" type="text" placeholder="ulica, nr, kod pocztowy, miejscowość" autocomplete="street-address" required />
+          <input id="orderAddress" name="address" type="text" placeholder="ulica, nr, kod pocztowy, miejscowość" data-i18n-placeholder="ulica, nr, kod pocztowy, miejscowość" autocomplete="street-address" required />
           <small class="err" data-err="address"></small>
         </div>
 
         <div class="field">
           <label for="orderFood">Co chcesz zjeść? <span class="req">*</span></label>
-          <textarea id="orderFood" name="food" rows="4" placeholder="np. 2× zupa rybna, dorsz po kaszubsku, frytki, kompot" required></textarea>
+          <textarea id="orderFood" name="food" rows="4" placeholder="np. 2× zupa rybna, dorsz po kaszubsku, frytki, kompot" data-i18n-placeholder="np. 2× zupa rybna, dorsz po kaszubsku, frytki, kompot" required></textarea>
           <small class="hint">Możesz wpisać ręcznie lub dodać dania z menu i użyć przycisku poniżej.</small>
           <small class="err" data-err="food"></small>
         </div>
@@ -130,7 +140,7 @@
             <span>Podsumowanie</span>
             <button type="button" class="link" id="addCartToForm">Wstaw koszyk do zamówienia</button>
           </div>
-          <ul id="summaryList" class="summary-list"><li class="muted">Koszyk jest pusty.</li></ul>
+          <ul id="summaryList" class="summary-list" data-i18n-skip><li class="muted">Koszyk jest pusty.</li></ul>
           <div class="summary-total">
             <span>Razem</span><strong id="summaryTotal">0,00 zł</strong>
           </div>
@@ -149,6 +159,7 @@
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/data.js"></script>
   <script src="js/place-images.js"></script>
   <script src="js/dish-images.js"></script>

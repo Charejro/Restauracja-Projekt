@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Menu — Portowa Fala | Władysławowo</title>
-  <meta name="description" content="Pełne menu restauracji Portowa Fala: zupy, obiady główne, dodatki, desery i napoje. Każde danie ze zdjęciem, gotowe do zamówienia online." />
+  <title>Galeria — Portowa Fala | Władysławowo</title>
+  <meta name="description" content="Galeria restauracji Portowa Fala: panorama Bałtyku, port rybacki we Władysławowie, sala z panoramicznym oknem, taras nad wodą i świeży połów." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -38,11 +38,11 @@
       </a>
       <nav class="nav__links" id="navLinks">
         <a href="index.html">Start</a>
-        <a href="menu.html" class="is-current">Menu</a>
+        <a href="menu.html">Menu</a>
         <a href="zamow.html">Zamów online</a>
         <a href="rezerwacja.html">Rezerwacja</a>
         <a href="kontakt.html">Kontakt</a>
-        <a href="galeria.html">Galeria</a>
+        <a href="galeria.html" class="is-current">Galeria</a>
       </nav>
       <div class="nav__actions">
         <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk" data-i18n-aria-label="cart.aria">
@@ -57,33 +57,52 @@
   </header>
 
   <section class="page-hero page-hero--photo">
-    <img class="page-hero__img" data-place="catch"
-         data-i18n-alt="Świeże ryby z portu na lodzie" alt="Świeże ryby z portu na lodzie" />
+    <img class="page-hero__img" data-place="panorama"
+         data-i18n-alt="Panorama morza z tarasu — zachód słońca nad Bałtykiem" alt="Panorama morza z tarasu — zachód słońca nad Bałtykiem" />
     <div class="page-hero__shade" aria-hidden="true"></div>
     <div class="wrap page-hero__content">
-      <p class="eyebrow eyebrow--light">Karta</p>
-      <h1>Menu</h1>
-      <p class="page-hero__lead">Każde danie ze zdjęciem — kliknij „Dodaj”, a pozycja trafi do koszyka i do zamówienia.</p>
+      <p class="eyebrow eyebrow--light">Zdjęcia</p>
+      <h1>Galeria</h1>
+      <p class="page-hero__lead">Morze z tarasu, restauracja w porcie rybackim, sala z panoramicznym oknem i świeży połów prosto z kutrów.</p>
     </div>
   </section>
 
-  <section class="section section--sand">
+  <section class="section">
     <div class="wrap">
-      <div class="tabs" id="menuTabs" role="tablist" aria-label="Kategorie menu">
-        <button class="tab is-active" data-cat="zupy" role="tab" type="button">🍲 Zupy</button>
-        <button class="tab" data-cat="obiad" role="tab" type="button">🍽️ Obiad główny</button>
-        <button class="tab" data-cat="dodatki" role="tab" type="button">🥔 Dodatki do obiadu</button>
-        <button class="tab" data-cat="desery" role="tab" type="button">🍰 Desery</button>
-        <button class="tab" data-cat="napoje" role="tab" type="button">🥤 Napoje</button>
+      <div class="gallery">
+        <figure class="gallery__item gallery__item--wide">
+          <img data-place="panorama" data-i18n-alt="Panorama morza z tarasu — zachód słońca nad Bałtykiem" alt="Panorama morza z tarasu — zachód słońca nad Bałtykiem" />
+          <figcaption>Panorama Bałtyku prosto z naszego tarasu</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="port" data-i18n-alt="Restauracja Portowa Fala w porcie rybackim we Władysławowie" alt="Restauracja Portowa Fala w porcie rybackim we Władysławowie" />
+          <figcaption>Restauracja w porcie rybackim we Władysławowie</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="interior" data-i18n-alt="Sala restauracji z panoramicznym oknem na morze" alt="Sala restauracji z panoramicznym oknem na morze" />
+          <figcaption>Sala z panoramicznym oknem na morze</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="terrace" data-i18n-alt="Taras restauracji nad wodą" alt="Taras restauracji nad wodą" />
+          <figcaption>Taras nad wodą — otwierany przy dobrej pogodzie</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="catch" data-i18n-alt="Świeży połów z kutrów na lodzie" alt="Świeży połów z kutrów na lodzie" />
+          <figcaption>Świeży połów prosto z kutrów</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="table" data-i18n-alt="Stolik nakryty przy panoramicznym oknie" alt="Stolik nakryty przy panoramicznym oknie" />
+          <figcaption>Stolik nakryty przy panoramicznym oknie</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="molo" data-i18n-alt="Molo rybackie o zmierzchu" alt="Molo rybackie o zmierzchu" />
+          <figcaption>Molo o zmierzchu</figcaption>
+        </figure>
       </div>
 
-      <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
-
-      <p class="menu-note muted">Ceny w złotych. Ryba z dnia ustalana wg porannego połowu. Dowóz: zaliczka 10% albo płatność z góry.</p>
-
       <div class="actions-row actions-row--center menu-actions">
-        <a class="btn btn--primary btn--big" href="zamow.html">Przejdź do zamówienia</a>
-        <a class="btn btn--ghost btn--big" href="rezerwacja.html">Zarezerwuj stolik</a>
+        <a class="btn btn--primary btn--big" href="rezerwacja.html">Zarezerwuj stolik</a>
+        <a class="btn btn--ghost btn--big" href="menu.html">Zobacz menu</a>
       </div>
     </div>
   </section>

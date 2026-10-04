@@ -96,7 +96,18 @@ p { margin: 0 0 1rem; }
 
 /* ---------- Topbar ---------- */
 .topbar { background: var(--navy); color: rgba(255, 255, 255, 0.86); font-size: 0.82rem; }
-.topbar__inner { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; justify-content: center; padding: 0.5rem 0; }
+.topbar__inner { display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; align-items: center; justify-content: space-between; padding: 0.4rem 0; }
+.topbar__info { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+/* Przełącznik języka */
+.lang { display: inline-flex; align-items: center; gap: 2px; background: rgba(255, 255, 255, 0.12); border-radius: 999px; padding: 2px; }
+.lang__btn {
+  font: inherit; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.8); background: none; border: 0; cursor: pointer;
+  padding: 0.22rem 0.6rem; border-radius: 999px; transition: 0.2s;
+}
+.lang__btn:hover { color: #fff; }
+.lang__btn.is-active { background: #fff; color: var(--navy); }
 .topbar a { color: #fff; text-decoration: none; }
 .topbar a:hover { color: var(--sea-light); }
 .topbar__sep { opacity: 0.4; }
@@ -410,20 +421,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--s
 .contact__list { list-style: none; padding: 0; margin: 1.4rem 0 0; }
 .contact__list li { display: flex; gap: 0.7rem; padding: 0.55rem 0; border-bottom: 1px dashed rgba(255,255,255,0.2); font-size: 0.96rem; }
 .contact__list a { color: #fff; }
-.contact__map {
-  position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden;
-  background: linear-gradient(180deg, #2aa9b8 0%, #12707f 55%, #0e3350 55%, #082036 100%);
-  box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.2);
+/* ---------- Mapa Google ---------- */
+.map-embed {
+  border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
+  box-shadow: var(--shadow); background: var(--sand); aspect-ratio: 4 / 3;
 }
-.contact__map-water { position: absolute; top: 8%; left: 5%; font-family: var(--font-display); font-size: 1.6rem; color: rgba(255,255,255,0.85); font-style: italic; }
-.contact__map-land { position: absolute; bottom: 8%; right: 6%; font-family: var(--font-display); font-size: 1.3rem; color: rgba(255,255,255,0.75); }
-.contact__pin {
-  position: absolute; top: 46%; left: 30%;
-  background: var(--coral); color: #fff; font-weight: 700; font-size: 0.85rem;
-  padding: 0.5rem 0.9rem; border-radius: 999px; box-shadow: 0 14px 30px -12px rgba(0,0,0,0.6);
-  animation: bob 2.6s ease-in-out infinite;
-}
-@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+.map-embed iframe { display: block; width: 100%; height: 100%; border: 0; }
+.map-embed--wide { aspect-ratio: 21 / 9; min-height: 320px; }
 
 /* ---------- Footer ---------- */
 .footer { background: var(--navy); color: rgba(255,255,255,0.7); font-size: 0.82rem; }
@@ -520,6 +524,18 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--s
   padding: clamp(2.6rem, 6vw, 4.2rem) 0; text-align: center;
   border-top: 1px solid var(--line);
 }
+/* Pas z tekstem na tle zdjęcia */
+.photo-band { position: relative; overflow: hidden; color: #fff; padding: clamp(3rem, 8vw, 5.5rem) 0; text-align: center; }
+.photo-band__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.photo-band__shade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(6, 24, 38, 0.58) 0%, rgba(6, 24, 38, 0.82) 100%);
+}
+.photo-band__content { position: relative; z-index: 2; }
+.photo-band__content h2 { color: #fff; }
+.photo-band__lead { color: rgba(255, 255, 255, 0.88); max-width: 620px; margin: 0 auto 0.4rem; }
+.photo-band .actions-row { margin-top: 1.6rem; }
+.page-hero--photo { min-height: 380px; }
 .cta-band__inner h2 { margin-bottom: 0.4rem; }
 .cta-band__inner .muted { margin-bottom: 0.4rem; }
 .menu-note { margin: 1.6rem 0 0; font-size: 0.85rem; }
@@ -564,6 +580,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--s
   .floor { min-height: 300px; }
   .gallery { grid-template-columns: 1fr; }
   .gallery__item--wide img { aspect-ratio: 16 / 10; }
+  .map-embed--wide { aspect-ratio: 16 / 10; min-height: 0; }
 }
 @media (max-width: 520px) {
   .hero__facts { gap: 1rem; }
