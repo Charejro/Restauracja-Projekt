@@ -36,6 +36,8 @@
     "Portowa Fala stoi na samym końcu portu rybackiego we Władysławowie. Ryby trafiają do naszej kuchni prosto z kutrów, a Ty jesz je przy panoramicznym oknie albo na tarasie tuż nad wodą. Kuchnia kaszubska, świeży połów i Bałtyk za szybą — od 1998 roku.":
       "Portowa Fala stands at the very end of the fishing port in Władysławowo. Fish go straight from the boats to our kitchen, and you enjoy them by a panoramic window or on the terrace right by the water. Kashubian cuisine, fresh catch and the Baltic behind the glass — since 1998.",
     "od 1998": "since 1998",
+    "Port Rybacki": "Fishing Port",
+    "— ryby prosto z kutrów, codziennie od 11:00": "— fish straight from the boats, daily from 11 am",
     "rodzinna kuchnia": "family kitchen",
     "ryb z Bałtyku": "Baltic fish",
     "stolików: okno, sala, taras": "tables: window, room, terrace",

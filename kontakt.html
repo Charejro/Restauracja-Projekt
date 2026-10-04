@@ -2,12 +2,13 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#16283a" />
   <title>Kontakt — Portowa Fala | Władysławowo</title>
   <meta name="description" content="Kontakt do restauracji Portowa Fala w porcie rybackim we Władysławowie. Adres, telefon, godziny otwarcia i zasięg dowozu." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -45,7 +46,7 @@
         <a href="galeria.html">Galeria</a>
       </nav>
       <div class="nav__actions">
-        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk" data-i18n-aria-label="cart.aria">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button">
           🛒 <span class="cart-btn__label">Koszyk</span>
           <span class="badge" id="cartCount">0</span>
         </button>
@@ -56,7 +57,8 @@
     </div>
   </header>
 
-  <section class="page-hero page-hero--photo">
+  <main>
+<section class="page-hero page-hero--photo">
     <img class="page-hero__img" data-place="port" data-i18n-alt="Restauracja Portowa Fala w porcie rybackim" alt="Restauracja Portowa Fala w porcie rybackim" />
     <div class="page-hero__shade" aria-hidden="true"></div>
     <div class="wrap page-hero__content">
@@ -92,6 +94,8 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="footer">
     <div class="wrap footer__inner">
       <span>© <span id="year"></span> Portowa Fala — Władysławowo</span>
@@ -99,10 +103,10 @@
     </div>
   </footer>
 
-  <script src="js/i18n.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/place-images.js"></script>
-  <script src="js/dish-images.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/place-images.js" defer></script>
+  <script src="js/dish-images.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>

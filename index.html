@@ -2,12 +2,13 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#16283a" />
   <title>Portowa Fala — restauracja z widokiem na morze | Władysławowo</title>
   <meta name="description" content="Restauracja Portowa Fala w porcie rybackim we Władysławowie. Ryby prosto z kutrów, panoramiczne okna z widokiem na Bałtyk. Zobacz menu albo zarezerwuj stolik." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -45,7 +46,7 @@
         <a href="galeria.html">Galeria</a>
       </nav>
       <div class="nav__actions">
-        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk" data-i18n-aria-label="cart.aria">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button">
           🛒 <span class="cart-btn__label">Koszyk</span>
           <span class="badge" id="cartCount">0</span>
         </button>
@@ -56,10 +57,12 @@
     </div>
   </header>
 
-  <!-- HERO: opis restauracji + dwa przyciski -->
+  <main>
+<!-- HERO: opis restauracji + dwa przyciski -->
   <section class="hero hero--home">
     <img class="hero__photo" data-place="panorama" data-i18n-alt="Panorama Bałtyku widziana z tarasu restauracji Portowa Fala" alt="Panorama Bałtyku widziana z tarasu restauracji Portowa Fala" />
     <div class="hero__shade" aria-hidden="true"></div>
+    <div class="stamp" aria-hidden="true">od 1998<br />Port Rybacki<br />Władysławowo</div>
     <div class="wrap hero__content">
       <p class="eyebrow eyebrow--light">Władysławowo • Port Rybacki</p>
       <h1>Morze na talerzu,<br /><span>widok na horyzont</span></h1>
@@ -72,6 +75,7 @@
         <a class="btn btn--primary btn--big" href="rezerwacja.html">Zarezerwuj stolik</a>
         <a class="btn btn--outline btn--big" href="menu.html">Zobacz menu</a>
       </div>
+      <p class="hand">— ryby prosto z kutrów, codziennie od 11:00</p>
       <ul class="hero__facts">
         <li><strong>od 1998</strong><span>rodzinna kuchnia</span></li>
         <li><strong>100%</strong><span>ryb z Bałtyku</span></li>
@@ -152,6 +156,8 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="footer">
     <div class="wrap footer__inner">
       <span>© <span id="year"></span> Portowa Fala — Władysławowo</span>
@@ -159,10 +165,11 @@
     </div>
   </footer>
 
-  <script src="js/i18n.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/place-images.js"></script>
-  <script src="js/dish-images.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/test-agent.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/place-images.js" defer></script>
+  <script src="js/dish-images.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>

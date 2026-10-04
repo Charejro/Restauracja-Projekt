@@ -63,12 +63,12 @@
       const drawer = document.createElement("aside");
       drawer.className = "drawer";
       drawer.id = "cartDrawer";
-      drawer.setAttribute("aria-label", "Koszyk");
-      drawer.setAttribute("data-i18n-aria-label", "cart.aria");
+      drawer.setAttribute("role", "dialog");
+      drawer.setAttribute("aria-labelledby", "cartTitle");
       drawer.setAttribute("aria-hidden", "true");
       drawer.innerHTML = `
         <div class="drawer__head">
-          <h3 data-i18n="cart.title">Twój koszyk</h3>
+          <h3 id="cartTitle" data-i18n="cart.title">Twój koszyk</h3>
           <button class="icon-btn" id="closeCart" type="button" aria-label="Zamknij">✕</button>
         </div>
         <div class="drawer__body" id="cartItems" data-i18n-skip></div>
@@ -162,7 +162,7 @@
           const name = item ? pick(item, "name") : it.name;
           return `
           <div class="cart-item">
-            <img class="cart-item__img" src="${img}" alt="" width="46" height="46" />
+            <img class="cart-item__img" src="${img}" alt="" width="46" height="46" decoding="async" />
             <div class="cart-item__info">
               <div class="cart-item__name">${name}</div>
               <div class="cart-item__price">${zl(it.price)} / ${I18N && I18N.lang === "en" ? "pc." : "szt."}</div>
@@ -209,7 +209,7 @@
       const tag = it.tag ? t(it.tag) : "";
       return `
       <article class="dish" style="animation-delay:${i * 40}ms">
-        <img class="dish__photo" src="${src}" alt="${name}" width="400" height="250" />
+        <img class="dish__photo" src="${src}" alt="${name}" width="400" height="250" decoding="async" />
         <div class="dish__body">
           ${tag ? `<span class="dish__tag">${tag}</span>` : ""}
           <div class="dish__head">
@@ -325,6 +325,7 @@
       toast(t("toast.orderOk", { phone: phone.value.trim(), payment: kwota }), "ok");
       orderForm.reset();
       syncFulfilment();
+      syncRadios();
       cart.clear();
       saveCart();
       renderCart();
@@ -562,7 +563,20 @@
     toastTimer = setTimeout(() => { el.className = "toast"; }, 4500);
   }
 
+  /* Podświetlenie wybranej opcji radio (działa też bez CSS :has()) */
+  function syncRadios() {
+    $$(".radio").forEach((label) => {
+      const input = label.querySelector('input[type="radio"]');
+      if (input) label.classList.toggle("is-checked", input.checked);
+    });
+  }
+
   function initNav() {
+    document.addEventListener("change", (e) => {
+      if (e.target && e.target.matches && e.target.matches('input[type="radio"], input[type="checkbox"]')) syncRadios();
+    });
+    syncRadios();
+
     const hamburger = $("#hamburger"), links = $("#navLinks");
     if (hamburger && links) {
       hamburger.addEventListener("click", () => {
@@ -579,7 +593,12 @@
 
   function initPlaceImages() {
     if (!window.placeArt) return;
-    $$("[data-place]").forEach((el) => { el.src = window.placeArt(el.dataset.place); });
+    // Ilustracje to lekkie SVG (bez pobierania z sieci) — ładujemy je od razu,
+    // żeby były widoczne także w tle, w ramce podglądu i przy drukowaniu.
+    $$("[data-place]").forEach((el) => {
+      el.decoding = "async";
+      el.src = window.placeArt(el.dataset.place);
+    });
   }
 
   /* Mapa Google — Port Rybacki, Władysławowo */
