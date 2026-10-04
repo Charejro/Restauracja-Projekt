@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zamów online — Portowa Fala | Władysławowo</title>
+  <meta name="description" content="Zamów jedzenie z restauracji Portowa Fala. Podaj numer telefonu, adres i co chcesz zjeść. Dowóz z zaliczką 10% lub płatnością z góry." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap topbar__inner">
+      <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
+      <span class="topbar__sep">•</span>
+      <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
+      <span class="topbar__sep">•</span>
+      <span>Codziennie 11:00 – 22:00</span>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a href="index.html" class="brand">
+        <span class="brand__mark" aria-hidden="true">⚓</span>
+        <span class="brand__text">
+          <strong>Portowa Fala</strong>
+          <small>restauracja &amp; ryby z portu</small>
+        </span>
+      </a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html">Start</a>
+        <a href="menu.html">Menu</a>
+        <a href="zamow.html" class="is-current">Zamów online</a>
+        <a href="rezerwacja.html">Rezerwacja</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <div class="nav__actions">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk">
+          🛒 <span class="cart-btn__label">Koszyk</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--light">Na dowóz i na wynos</p>
+      <h1>Zamów online</h1>
+      <p class="page-hero__lead">Trzy rzeczy: numer telefonu, adres i co chcesz zjeść. Oddzwonimy z potwierdzeniem.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap order">
+      <div class="order__intro">
+        <p class="eyebrow">Jak to działa</p>
+        <h2>Prosto i bez konta</h2>
+        <p>Wypełnij <strong>numer telefonu</strong>, <strong>adres</strong> i <strong>co chcesz zjeść</strong>. Możesz wpisać dania ręcznie albo wrzucić je z koszyka — zdjęcia i ceny znajdziesz w <a href="menu.html">menu</a>.</p>
+
+        <div class="pay-note pay-note--light">
+          <h3>Dowóz — jak płacisz?</h3>
+          <ul>
+            <li><strong>Zaliczka 10%:</strong> płacisz z góry 10% zamówienia, resztę kurierowi przy odbiorze.</li>
+            <li><strong>Płatność z góry:</strong> płacisz całość online, kurier tylko dostarcza.</li>
+          </ul>
+          <p class="muted">Odbiór osobisty w restauracji jest zawsze bez zaliczki.</p>
+        </div>
+
+        <ul class="mini-list">
+          <li><span>🚚</span> Dowozimy w promieniu 12 km: Władysławowo, Chłapowo, Jastrzębia Góra, Karwia.</li>
+          <li><span>⏱️</span> Średni czas dowozu: 40 minut.</li>
+          <li><span>📞</span> Zamówienie potwierdzamy telefonicznie.</li>
+        </ul>
+      </div>
+
+      <form class="card form" id="orderForm" novalidate>
+        <h3>Twoje zamówienie</h3>
+
+        <div class="field">
+          <label for="orderPhone">Numer telefonu <span class="req">*</span></label>
+          <input id="orderPhone" name="phone" type="tel" inputmode="tel" placeholder="np. 601 234 567" autocomplete="tel" required />
+          <small class="err" data-err="phone"></small>
+        </div>
+
+        <div class="field">
+          <label for="orderAddress">Adres dostawy <span class="req">*</span></label>
+          <input id="orderAddress" name="address" type="text" placeholder="ulica, nr, kod pocztowy, miejscowość" autocomplete="street-address" required />
+          <small class="err" data-err="address"></small>
+        </div>
+
+        <div class="field">
+          <label for="orderFood">Co chcesz zjeść? <span class="req">*</span></label>
+          <textarea id="orderFood" name="food" rows="4" placeholder="np. 2× zupa rybna, dorsz po kaszubsku, frytki, kompot" required></textarea>
+          <small class="hint">Możesz wpisać ręcznie lub dodać dania z menu i użyć przycisku poniżej.</small>
+          <small class="err" data-err="food"></small>
+        </div>
+
+        <fieldset class="field">
+          <legend>Sposób realizacji</legend>
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="fulfilment" value="dowóz" checked /> 🚚 Dowóz</label>
+            <label class="radio"><input type="radio" name="fulfilment" value="odbiór" /> 🏠 Odbiór osobisty</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="field" id="payField">
+          <legend>Płatność za dowóz</legend>
+          <div class="radio-row radio-row--col">
+            <label class="radio">
+              <input type="radio" name="payment" value="zaliczka" checked />
+              <span>Zaliczka 10% z góry<small>Resztę płacisz kurierowi. Zaliczka: <b id="depositAmount">0,00 zł</b></small></span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="payment" value="z góry" />
+              <span>Płatność z góry (całość)<small>Zamówienie opłacone online: <b id="prepayAmount">0,00 zł</b></small></span>
+            </label>
+          </div>
+          <small class="err" data-err="payment"></small>
+        </fieldset>
+
+        <div class="order__summary" id="orderSummary">
+          <div class="order__summary-head">
+            <span>Podsumowanie</span>
+            <button type="button" class="link" id="addCartToForm">Wstaw koszyk do zamówienia</button>
+          </div>
+          <ul id="summaryList" class="summary-list"><li class="muted">Koszyk jest pusty.</li></ul>
+          <div class="summary-total">
+            <span>Razem</span><strong id="summaryTotal">0,00 zł</strong>
+          </div>
+        </div>
+
+        <button class="btn btn--primary btn--block" type="submit">Złóż zamówienie</button>
+        <p class="form__foot muted">Zamawiając, akceptujesz nasz regulamin. Dowozimy w promieniu 12 km od portu.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span>© <span id="year"></span> Portowa Fala — Władysławowo</span>
+      <span>Ryby z Bałtyku • kuchnia kaszubska • widok na morze</span>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/place-images.js"></script>
+  <script src="js/dish-images.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

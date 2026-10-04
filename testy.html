@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tester strony — Portowa Fala</title>
+  <link rel="stylesheet" href="css/testy.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="top__inner">
+      <div class="brand">
+        <span class="brand__icon" aria-hidden="true">🧪</span>
+        <div>
+          <h1>Tester strony — Portowa Fala</h1>
+          <p>automatyczne testy w przeglądarce · bez instalacji i bez serwera</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn--primary" id="runAll" type="button">▶ Uruchom wszystkie</button>
+        <button class="btn btn--ghost" id="retryFailed" type="button" disabled>↻ Ponów nieudane</button>
+        <button class="btn btn--ghost" id="copySummary" type="button">📋 Kopiuj podsumowanie</button>
+        <button class="btn btn--ghost" id="downloadReport" type="button" disabled>⬇ Raport JSON</button>
+        <button class="btn btn--danger" id="stopRun" type="button" hidden>■ Zatrzymaj</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="summary" aria-label="Podsumowanie wyników">
+    <div class="donut" title="Wynik testów">
+      <svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true">
+        <circle cx="46" cy="46" r="40" fill="none" stroke="#e7edf1" stroke-width="9"></circle>
+        <circle id="donutArc" cx="46" cy="46" r="40" fill="none" stroke="#c9d4dc" stroke-width="9"
+                stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3"></circle>
+      </svg>
+      <div class="donut__label" id="donutLabel">—</div>
+    </div>
+    <div class="summary__mid">
+      <div class="chips">
+        <button class="chip is-active" type="button" data-filter="all">Wszystkie <b id="cntAll">0</b></button>
+        <button class="chip" type="button" data-filter="pass">✅ <b id="cntPass">0</b></button>
+        <button class="chip" type="button" data-filter="fail">❌ <b id="cntFail">0</b></button>
+        <button class="chip" type="button" data-filter="warn">⚠️ <b id="cntWarn">0</b></button>
+        <button class="chip" type="button" data-filter="pending">⏳ <b id="cntPending">0</b></button>
+      </div>
+      <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+    </div>
+    <div class="summary__meta">
+      <strong id="verdict">Gotowe do startu</strong>
+      <span id="statusText">Testy uruchomią się automatycznie…</span>
+      <span id="envInfo"></span>
+    </div>
+  </section>
+
+  <main class="layout">
+    <section class="results" id="results" aria-label="Wyniki testów"></section>
+    <aside class="preview">
+      <div class="preview__head">
+        <span>👁 Podgląd testowanej strony</span>
+        <span id="vpLabel">—</span>
+      </div>
+      <div class="preview__stage" id="stage">
+        <iframe id="frame" title="Testowana strona" src="about:blank"></iframe>
+      </div>
+      <p class="preview__note">Strona jest przeładowywana przed każdym testem, aby wyniki były wiarygodne.
+        Ramka obok pokazuje bieżący stan strony.</p>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <p><strong>Jak to działa:</strong> aplikacja otwiera <code>index.html?test=1</code> w ramce i wykonuje testy
+      na prawdziwej stronie. Nie wymaga serwera ani instalacji.</p>
+    <p>Wymagany plik: <code>js/test-agent.js</code> dołączony w <code>index.html</code>.
+      Dodawanie testów: <code>js/testy.js</code> → tablica <code>SUITES</code>.</p>
+  </footer>
+
+  <script src="js/testy.js"></script>
+</body>
+</html>

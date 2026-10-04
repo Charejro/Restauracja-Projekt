@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portowa Fala — restauracja z widokiem na morze | Władysławowo</title>
+  <meta name="description" content="Restauracja Portowa Fala w porcie rybackim we Władysławowie. Ryby prosto z kutrów, panoramiczne okna z widokiem na Bałtyk. Zobacz menu albo zarezerwuj stolik." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap topbar__inner">
+      <span>📍 Port Rybacki 4, 84-120 Władysławowo</span>
+      <span class="topbar__sep">•</span>
+      <a href="tel:+48581234567">☎ +48 58 123 45 67</a>
+      <span class="topbar__sep">•</span>
+      <span>Codziennie 11:00 – 22:00</span>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a href="index.html" class="brand">
+        <span class="brand__mark" aria-hidden="true">⚓</span>
+        <span class="brand__text">
+          <strong>Portowa Fala</strong>
+          <small>restauracja &amp; ryby z portu</small>
+        </span>
+      </a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html" class="is-current">Start</a>
+        <a href="menu.html">Menu</a>
+        <a href="zamow.html">Zamów online</a>
+        <a href="rezerwacja.html">Rezerwacja</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <div class="nav__actions">
+        <button class="btn btn--ghost cart-btn" id="cartBtn" type="button" aria-label="Koszyk">
+          🛒 <span class="cart-btn__label">Koszyk</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO: opis restauracji + dwa przyciski -->
+  <section class="hero hero--home">
+    <img class="hero__photo" data-place="panorama" alt="Panorama Bałtyku widziana z tarasu restauracji Portowa Fala" />
+    <div class="hero__shade" aria-hidden="true"></div>
+    <div class="wrap hero__content">
+      <p class="eyebrow eyebrow--light">Władysławowo • Port Rybacki</p>
+      <h1>Morze na talerzu,<br /><span>widok na horyzont</span></h1>
+      <p class="hero__lead">
+        Portowa Fala stoi na samym końcu portu rybackiego we Władysławowie. Ryby trafiają do naszej
+        kuchni prosto z kutrów, a Ty jesz je przy panoramicznym oknie albo na tarasie tuż nad wodą.
+        Kuchnia kaszubska, świeży połów i Bałtyk za szybą — od 1998 roku.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--big" href="rezerwacja.html">Zarezerwuj stolik</a>
+        <a class="btn btn--outline btn--big" href="menu.html">Zobacz menu</a>
+      </div>
+      <ul class="hero__facts">
+        <li><strong>od 1998</strong><span>rodzinna kuchnia</span></li>
+        <li><strong>100%</strong><span>ryb z Bałtyku</span></li>
+        <li><strong>13</strong><span>stolików: okno, sala, taras</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ZDJĘCIA -->
+  <section class="section" id="galeria">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Zobacz na własne oczy</p>
+          <h2>Panorama i nasz port</h2>
+        </div>
+        <p class="section__note">Morze z tarasu, restauracja w porcie rybackim i sala z panoramicznym oknem.</p>
+      </div>
+
+      <div class="gallery">
+        <figure class="gallery__item gallery__item--wide">
+          <img data-place="panorama" alt="Panorama morza z tarasu — zachód słońca nad Bałtykiem" />
+          <figcaption>Panorama Bałtyku prosto z naszego tarasu</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="port" alt="Restauracja Portowa Fala w porcie rybackim we Władysławowie" />
+          <figcaption>Restauracja w porcie rybackim we Władysławowie</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="interior" alt="Sala restauracji z panoramicznym oknem na morze" />
+          <figcaption>Sala z panoramicznym oknem na morze</figcaption>
+        </figure>
+        <figure class="gallery__item">
+          <img data-place="terrace" alt="Taras restauracji nad wodą" />
+          <figcaption>Taras nad wodą — otwierany przy dobrej pogodzie</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- O RESTAURACJI -->
+  <section class="section section--sand" id="o-restauracji">
+    <div class="wrap about">
+      <div class="about__text">
+        <p class="eyebrow">O restauracji</p>
+        <h2>Stoimy tam, gdzie kończy się ląd</h2>
+        <p>
+          <strong>Portowa Fala</strong> to restauracja położona bezpośrednio w porcie rybackim we Władysławowie.
+          Zajmujemy dawny budynek kapitanatu — z każdej sali widać morze, a latem otwieramy taras przed
+          panoramicznym oknem, dosłownie nad wodą. Nie mamy widoku „w stronę morza”. Mamy morze za szybą.
+        </p>
+        <p>
+          Kuchnią kieruje <strong>Ania Skiba</strong>, która od 1998 roku gotuje dla rybaków z sąsiedniego mola.
+          Ryby kupujemy z pierwszego kutra, który wróci do portu — dlatego karta zmienia się razem z połowem,
+          a resztę ziół i warzyw bierzemy od gospodarzy z Kaszub.
+        </p>
+        <ul class="about__list">
+          <li><span>🌊</span> Stoliki przy panoramicznych oknach i taras przed szybą</li>
+          <li><span>🐟</span> Ryba z dnia prosto z kutrów z portu we Władysławowie</li>
+          <li><span>👨‍🍳</span> Kuchnia kaszubska gotowana od zera, bez półproduktów</li>
+          <li><span>🚚</span> Dowóz w promieniu 12 km — zaliczka 10% albo płatność z góry</li>
+          <li><span>🐾</span> Pies mile widziany na tarasie</li>
+          <li><span>🅿️</span> Bezpłatny parking dla gości przy porcie</li>
+        </ul>
+      </div>
+      <aside class="about__card">
+        <h3>Dlaczego my?</h3>
+        <div class="stat"><strong>7</strong><span>gatunków ryb dziennie</span></div>
+        <div class="stat"><strong>13</strong><span>stolików: przy oknie, w sali i na tarasie</span></div>
+        <div class="stat"><strong>4,9★</strong><span>z 1200 opinii</span></div>
+        <blockquote>
+          „Widok jak z pocztówki, a sandacz najlepszy od lat.”
+          <cite>— Marta, Gdańsk</cite>
+        </blockquote>
+      </aside>
+    </div>
+  </section>
+
+  <!-- PRZYCISKI -->
+  <section class="cta-band">
+    <div class="wrap cta-band__inner">
+      <h2>Głodny? Zajrzyj do karty albo zarezerwuj stolik</h2>
+      <p class="muted">Reszta — zamówienie z dowozem i pełne menu — czeka na osobnych stronach.</p>
+      <div class="actions-row actions-row--center">
+        <a class="btn btn--primary btn--big" href="menu.html">Zobacz menu</a>
+        <a class="btn btn--navy btn--big" href="rezerwacja.html">Zarezerwuj stolik</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span>© <span id="year"></span> Portowa Fala — Władysławowo</span>
+      <span>Ryby z Bałtyku • kuchnia kaszubska • widok na morze</span>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/place-images.js"></script>
+  <script src="js/dish-images.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
